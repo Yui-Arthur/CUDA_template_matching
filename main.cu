@@ -4,8 +4,8 @@
 #include <time.h>
 #include <math.h>
 #include <string.h>
-#include "PCC.h"
-#include "SSD.h"
+#include "include/PCC.h"
+#include "include/SSD.h"
 
 void init(int **t, int **s, int *rows, int *columns, int *kernel, char **argv);
 void get_row_and_column_from_file_name(char *file_name, int *rows, int *columns);
@@ -221,12 +221,11 @@ void SSD_test(int *t, int*s, int rows, int columns, int kernel_size){
     int *cuda_res_pcc = (int*) malloc(rows * columns * sizeof(int));
     int *cuda_res_pcc_faster = (int*) malloc(rows * columns * sizeof(int));
 
-    float cpu_time, cpu_faster_time, cuda_time, cuda_faster_time;
+    float cpu_time, cuda_time;
     const char *device_type[10] = {"CPU", "CPU Faster", "CUDA", "CUDA Faster"};
     cpu_time = SSD(t, s, rows, columns, kernel_size, cpu_res_pcc);
-    // cpu_faster_time = PCC_faster(t, s, rows, columns, kernel_size, cpu_faster_res_pcc);
     cuda_time = SSD_CUDA(t, s, rows, columns, kernel_size, cuda_res_pcc);
-    // cuda_faster_time = PCC_CUDA_faster(t, s, rows, columns, kernel_size, cuda_res_pcc_faster);
+    
     show_output_int(cpu_res_pcc, rows, columns, kernel_size, device_type[0]);
     show_output_int(cuda_res_pcc, rows, columns, kernel_size, device_type[2]);
     printf("============== result ==============\n");

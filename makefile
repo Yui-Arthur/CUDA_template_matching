@@ -4,11 +4,12 @@ NV := nvcc
 
 SSD ?= 1
 PCC ?= 1
+INCLUDE = include
 FLAGS := -DSSD_TEST=$(SSD) -DPCC_TEST=$(PCC)
 # ifdef TARGET
 # 	FLAGS := -DTARGET=$(TARGET)
 # endif
-build: main.cu PCC.h SSD.h
+build: main.cu ${INCLUDE}/PCC.h ${INCLUDE}/SSD.h
 	$(NV) $(FLAGS) main.cu -o main.out
 
 run: main.out
