@@ -3,9 +3,13 @@
 ## Introduce
 #### This project implement the PCC (Pearson Correlation Coefficient) and SSD (Sum of Square Difference) algorithm for CUDA in C
 
+$$ PCC(X,Y)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\bar{Y}\right)^{2}}} $$
+$$ SSD(X,Y)=\sum_{i=1}^{n}\left(X_{i}-Y_i\right)^2 $$
+
+
 ## Requirement
-### `nvcc` (NVIDIA CUDA Compiler Driver) must in your system
-### (option) `make` for build the project
+* ### `nvcc` (NVIDIA CUDA Compiler Driver) must in your system
+* ### (optional) `make` for build the project
 
 ## Dataset 
 ### Datasets folder contain several dataset
