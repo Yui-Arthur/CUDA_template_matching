@@ -103,8 +103,8 @@ float SSD_CUDA(int *t, int *s, int rows, int columns, int kernel_size, int *res_
     float kernel_elapsedTime;
     cudaEventElapsedTime(&kernel_elapsedTime, start, stop);
 
-    printf("PCC Total Function Time : %10.10f ms\n", func_elapsedTime * 1000);
-    printf("PCC Calculation Time on GPU: %10.10f ms\n", kernel_elapsedTime);
+    printf("SSD Total Function Time : %10.10f ms\n", func_elapsedTime * 1000);
+    printf("SSD Calculation Time on GPU: %10.10f ms\n", kernel_elapsedTime);
 
     printf("======================================\n");
     return kernel_elapsedTime;

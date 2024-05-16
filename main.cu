@@ -22,9 +22,14 @@ int main(int argc, char **argv){
     int rows, columns, kernel_size, *t, *s;
     
     init(&t, &s, &rows, &columns, &kernel_size, argv);
-    // PCC_test(t, s, rows, columns, kernel_size);
-    SSD_test(t, s, rows, columns, kernel_size);
-    
+    #if(PCC_TEST == 1)
+        PCC_test(t, s, rows, columns, kernel_size);
+    #endif
+
+    #if(SSD_TEST == 1)
+        SSD_test(t, s, rows, columns, kernel_size);
+    #endif
+
     return 0;
 }
 
@@ -148,7 +153,7 @@ void show_output_float(float *res, int rows, int columns, int kernel_size, const
 void show_output_int(int *res, int rows, int columns, int kernel_size, const char *device){
     int *max_x, *max_y, idx=0;
     int *v; 
-    int max_correlation = 0.0;
+    int min_correlation = 1e9;
 
     printf("============== %s output ==============\n", device);
     max_x = (int*) malloc(150 * sizeof(int));
@@ -157,14 +162,14 @@ void show_output_int(int *res, int rows, int columns, int kernel_size, const cha
 
     for(int i=0; i<rows - kernel_size + 1; i++){
         for(int j=0; j<columns - kernel_size + 1; j++){
-            if(res[i*columns + j] > max_correlation)
-                max_x[0] = i, max_y[0] = j, v[0] = res[i*columns + j], idx = 1, max_correlation = res[i*columns + j];
-            else if(res[i*columns + j] == max_correlation)
+            if(res[i*columns + j] < min_correlation)
+                max_x[0] = i, max_y[0] = j, v[0] = res[i*columns + j], idx = 1, min_correlation = res[i*columns + j];
+            else if(res[i*columns + j] == min_correlation)
                 max_x[idx] = i, max_y[idx] = j, v[idx] = res[i*columns + j], idx++;
         }
     }
 
-    printf("max correlation %.3f\n", max_correlation);
+    printf("max correlation %d\n", min_correlation);
     for(int i=0; i<idx; i++){
         printf("(%d, %d) : %d\n", max_x[i], max_y[i], v[i]);
     }
@@ -223,11 +228,9 @@ void SSD_test(int *t, int*s, int rows, int columns, int kernel_size){
     cuda_time = SSD_CUDA(t, s, rows, columns, kernel_size, cuda_res_pcc);
     // cuda_faster_time = PCC_CUDA_faster(t, s, rows, columns, kernel_size, cuda_res_pcc_faster);
     show_output_int(cpu_res_pcc, rows, columns, kernel_size, device_type[0]);
-    show_output_int(cuda_res_pcc, rows, columns, kernel_size, device_type[2])
-    ;
+    show_output_int(cuda_res_pcc, rows, columns, kernel_size, device_type[2]);
     printf("============== result ==============\n");
     // printf("result %d\n", r);
-    printf("cpu vs. cpu faster speedup %3.20f\n", cpu_time / cpu_faster_time);
     printf("cpu vs. gpu speedup  %3.20f\n", cpu_time / cuda_time);
     printf("====================================\n");
 
