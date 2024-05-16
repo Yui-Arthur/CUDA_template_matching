@@ -3,7 +3,8 @@
 ## Introduce
 #### This project implement the PCC (Pearson Correlation Coefficient) and SSD (Sum of Square Difference) algorithm for CUDA in C
 
-$$ PCC(X,Y)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\bar{Y}\right)^{2}}} $$
+$$ PCC(X,Y)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\bar{Y}\right)^{2}}} $$<br><br>
+
 $$ SSD(X,Y)=\sum_{i=1}^{n}\left(X_{i}-Y_i\right)^2 $$
 
 
